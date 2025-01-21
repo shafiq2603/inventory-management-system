@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple E-commerce Interface</title>
+    <title>Advanced E-commerce Interface</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
@@ -24,11 +24,15 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
         .product {
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 10px;
-            margin: 10px;
             text-align: center;
             background-color: #fff;
             transition: box-shadow 0.3s;
@@ -80,37 +84,47 @@
             font-size: 1.2em;
             margin-top: 10px;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Simple E-commerce Interface</h1>
+    <h1>Advanced E-commerce Interface</h1>
 
-    <div id="productList">
-        <div class="product">
-            <img src="https://via.placeholder.com/150" alt="Product 1">
-            <h2>Product 1</h2>
-            <p>$10.00</p>
-            <button onclick="addToCart('Product 1', 10.00)">Add to Cart</button>
-        </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/150" alt="Product 2">
-            <h2>Product 2</h2>
-            <p>$15.00</p>
-            <button onclick="addToCart('Product 2', 15.00)">Add to Cart</button>
-        </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/150" alt="Product 3">
-            <h2>Product 3</h2>
-            <p>$20.00</p>
-            <button onclick="addToCart('Product 3', 20.00)">Add to Cart</button>
-        </div>
-    </div>
-
-    <div class="cart">
-        <h2>Shopping Cart</h2>
-        <div id="cartItems"></div>
-        <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
-    </div>
-</div
+    <div class="product-grid" id="productList">
+        <div class="product" onclick="openModal('Product 1', 'https://via.placeholder.com/150', 10.00)">
+            <img
