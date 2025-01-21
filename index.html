@@ -4,10 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
         }
         table {
             width: 100%;
@@ -16,115 +57,74 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #007bff;
+            color: white;
         }
         .alert {
             color: red;
+            margin-top: 10px;
+        }
+        .low-stock {
+            color: orange;
+        }
+        .total-value {
+            font-weight: bold;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
 
-<h1>Inventory Management System</h1>
+<div class="container">
+    <h1>Inventory Management System</h1>
 
-<h2>Add Product</h2>
-<form id="addProductForm">
-    <label for="productName">Product Name:</label>
-    <input type="text" id="productName" required>
-    <label for="productQuantity">Quantity:</label>
-    <input type="number" id="productQuantity" required>
-    <label for="productPrice">Price per Unit:</label>
-    <input type="number" id="productPrice" step="0.01" required>
-    <button type="submit">Add Product</button>
-</form>
+    <h2>Add Product</h2>
+    <form id="addProductForm">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" required>
+        <label for="productQuantity">Quantity:</label>
+        <input type="number" id="productQuantity" required min="1">
+        <label for="productPrice">Price per Unit:</label>
+        <input type="number" id="productPrice" step="0.01" required min="0.01">
+        <button type="submit">Add Product</button>
+    </form>
 
-<h2>Remove Product</h2>
-<form id="removeProductForm">
-    <label for="removeProductName">Product Name:</label>
-    <input type="text" id="removeProductName" required>
-    <label for="removeProductQuantity">Quantity:</label>
-    <input type="number" id="removeProductQuantity" required>
-    <button type="submit">Remove Product</button>
-</form>
+    <h2>Remove Product</h2>
+    <form id="removeProductForm">
+        <label for="removeProductName">Product Name:</label>
+        <input type="text" id="removeProductName" required>
+        <label for="removeProductQuantity">Quantity:</label>
+        <input type="number" id="removeProductQuantity" required min="1">
+        <button type="submit">Remove Product</button>
+    </form>
 
-<h2>Inventory</h2>
-<table id="inventoryTable">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price per Unit</th>
-            <th>Total Value</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    <h2>Inventory</h2>
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price per Unit</th>
+                <th>Total Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-<h2>Total Inventory Value: <span id="totalValue">$0.00</span></h2>
-<div id="lowStockAlerts" class="alert"></div>
+    <h2>Total Inventory Value: <span id="totalValue" class="total-value">$0.00</span></h2>
+    <div id="lowStockAlerts" class="alert"></div>
+</div>
 
 <script>
     const inventory = {};
 
     document.getElementById('addProductForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const name = document.getElementById('productName').value;
+        const name = document.getElementById('productName').value.trim();
         const quantity = parseInt(document.getElementById('productQuantity').value);
-        const price = parseFloat(document.getElementById('productPrice').value);
-
-        if (inventory[name]) {
-            inventory[name].quantity += quantity;
-        } else {
-            inventory[name] = { quantity: quantity, price: price };
-        }
-
-        updateInventoryTable();
-        this.reset();
-    });
-
-    document.getElementById('removeProductForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const name = document.getElementById('removeProductName').value;
-        const quantity = parseInt(document.getElementById('removeProductQuantity').value);
-
-        if (inventory[name]) {
-            if (inventory[name].quantity >= quantity) {
-                inventory[name].quantity -= quantity;
-                if (inventory[name].quantity === 0) {
-                    delete inventory[name];
-                }
-            } else {
-                alert(`Cannot remove ${quantity} of ${name}. Only ${inventory[name].quantity} available.`);
-            }
-        } else {
-            alert(`Product ${name} not found in inventory.`);
-        }
-
-        updateInventoryTable();
-        this.reset();
-    });
-
-    function updateInventoryTable() {
-        const tbody = document.getElementById('inventoryTable').getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        let totalValue = 0;
-        let lowStockAlerts = '';
-
-        for (const name in inventory) {
-            const product = inventory[name];
-            const totalProductValue = product.quantity * product.price;
-            totalValue += totalProductValue;
-
-            const row = tbody.insertRow();
-            row.insertCell(0).innerText = name;
-            row.insertCell(1).innerText = product.quantity;
-            row.insertCell(2).innerText = `$${product.price.toFixed(2)}`;
-            row.insertCell(3).innerText = `$${totalProductValue.toFixed(2)}`;
-
-            if (product.quantity < 5) {
-                lowStockAlerts
+        const price = parseFloat(document.getElementById('
