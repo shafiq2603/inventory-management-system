@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Inventory System</title>
+    <title>Advanced Sports Inventory</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f1f1f1;
+            background-color: #f8f8f8;
             color: #333;
         }
 
@@ -61,6 +61,15 @@
             font-weight: 600;
         }
 
+        input[type="text"] {
+            padding: 8px;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
         button {
             background-color: #2D9CDB;
             color: white;
@@ -95,6 +104,19 @@
             background-color: #218838;
         }
 
+        .filter {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .filter input {
+            width: 30%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
         /* Responsive Styles */
         @media screen and (max-width: 768px) {
             .container {
@@ -120,10 +142,14 @@
 <body>
 
     <header>
-        Sports Inventory System
+        Advanced Sports Inventory System
     </header>
 
     <div class="container">
+        <div class="filter">
+            <input type="text" id="searchBar" placeholder="Search by Item Name..." onkeyup="filterItems()">
+        </div>
+
         <div class="table-container">
             <table id="inventoryTable">
                 <thead>
@@ -134,22 +160,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Badminton Racket</td>
-                        <td><span>10</span></td>
-                        <td>
-                            <button onclick="updateQuantity(this, 1)">+1</button>
-                            <button onclick="updateQuantity(this, -1)">-1</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cricket Batting Gloves</td>
-                        <td><span>5</span></td>
-                        <td>
-                            <button onclick="updateQuantity(this, 1)">+1</button>
-                            <button onclick="updateQuantity(this, -1)">-1</button>
-                        </td>
-                    </tr>
+                    <!-- Inventory Items will be listed here -->
                 </tbody>
             </table>
         </div>
@@ -160,7 +171,40 @@
     </div>
 
     <script>
-        // Update the quantity by increasing or decreasing
+        const inventoryData = [
+            { name: "Badminton Racket Vector", quantity: 10 },
+            { name: "Cricket Batting Gloves (Pair)", quantity: 5 },
+            { name: "Tennis Net Sportiva", quantity: 8 },
+            { name: "Tennis Racket (Wilson)", quantity: 15 },
+            { name: "Agility Cone 6\"", quantity: 20 },
+            { name: "Amplifier for Octopad", quantity: 12 },
+            { name: "Ath Chest Number-Cloth", quantity: 10 },
+            { name: "Ath Discus Nelco 1KGS", quantity: 8 },
+            { name: "Ath Relay Baton (Aluminium)", quantity: 15 },
+            { name: "Ath Javelin AL 800 GM", quantity: 7 },
+            // Add all the other items similarly...
+        ];
+
+        // Function to render the inventory table
+        function renderInventory() {
+            const tableBody = document.querySelector("#inventoryTable tbody");
+            tableBody.innerHTML = ""; // Clear the table
+
+            inventoryData.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td><span>${item.quantity}</span></td>
+                    <td>
+                        <button onclick="updateQuantity(this, 1)">+1</button>
+                        <button onclick="updateQuantity(this, -1)">-1</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to update the quantity of an item
         function updateQuantity(button, change) {
             const row = button.closest('tr');
             const quantitySpan = row.querySelector('td span');
@@ -172,29 +216,46 @@
             quantitySpan.textContent = currentQuantity;
         }
 
-        // Add a new item to the table
+        // Function to add a new item to the inventory
         function addItem() {
             const itemName = prompt("Enter the name of the new item:");
             const itemQuantity = parseInt(prompt("Enter the quantity for the new item (0-20):"), 10);
 
             if (itemName && !isNaN(itemQuantity) && itemQuantity >= 0 && itemQuantity <= 20) {
-                const tableBody = document.querySelector("#inventoryTable tbody");
-                const newRow = document.createElement("tr");
+                inventoryData.push({ name: itemName, quantity: itemQuantity });
+                renderInventory();
+            } else {
+                alert("Invalid input. Please enter a valid name and quantity (0-20).");
+            }
+        }
 
-                newRow.innerHTML = `
-                    <td>${itemName}</td>
-                    <td><span>${itemQuantity}</span></td>
+        // Function to filter items based on search input
+        function filterItems() {
+            const searchTerm = document.getElementById("searchBar").value.toLowerCase();
+
+            const filteredData = inventoryData.filter(item =>
+                item.name.toLowerCase().includes(searchTerm)
+            );
+
+            const tableBody = document.querySelector("#inventoryTable tbody");
+            tableBody.innerHTML = ""; // Clear the table
+
+            filteredData.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td><span>${item.quantity}</span></td>
                     <td>
                         <button onclick="updateQuantity(this, 1)">+1</button>
                         <button onclick="updateQuantity(this, -1)">-1</button>
                     </td>
                 `;
-
-                tableBody.appendChild(newRow);
-            } else {
-                alert("Invalid input. Please enter a valid name and quantity (0-20).");
-            }
+                tableBody.appendChild(row);
+            });
         }
+
+        // Initialize the page by rendering the inventory
+        renderInventory();
     </script>
 
 </body>
