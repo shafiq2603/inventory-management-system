@@ -20,47 +20,32 @@
         }
 
         .container {
-            display: flex;
-            justify-content: space-between;
             margin: 20px;
         }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            flex: 3;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .product-card {
-            background: white;
+        th, td {
             border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
+            padding: 10px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .product-card img {
-            max-width: 100%;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
+        th {
+            background-color: #0044cc;
+            color: white;
         }
 
-        .price {
-            color: #0044cc;
-            font-size: 1.2em;
-            margin: 10px 0;
+        .actions {
+            margin-top: 20px;
+            text-align: center;
         }
 
-        input[type="number"] {
-            width: 60px;
-            padding: 5px;
-            font-size: 1em;
-            margin: 5px;
-        }
-
-        button.add-to-cart {
+        button {
             background-color: #0044cc;
             color: white;
             border: none;
@@ -69,137 +54,82 @@
             cursor: pointer;
         }
 
-        button.add-to-cart:hover {
+        button:hover {
             background-color: #003399;
-        }
-
-        .cart {
-            flex: 1;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-left: 20px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .cart-summary {
-            margin-top: 20px;
-        }
-
-        #checkout {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        #checkout:hover {
-            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>Sports Inventory Store</h1>
+        <h1>Sports Inventory System</h1>
     </header>
     <main class="container">
-        <section class="product-grid">
-            <!-- Sample Product Card -->
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300" alt="Badminton Racket">
-                <h3>Badminton Racket VECTOR</h3>
-                <p class="price">RM 150</p>
-                <label for="quantity1">Qty:</label>
-                <input type="number" id="quantity1" name="quantity1" value="0" min="0" max="20">
-                <button class="add-to-cart" data-name="Badminton Racket VECTOR" data-price="150">Add to Cart</button>
-            </div>
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300" alt="Cricket Batting Gloves">
-                <h3>Cricket Batting Gloves (Pair)</h3>
-                <p class="price">RM 120</p>
-                <label for="quantity2">Qty:</label>
-                <input type="number" id="quantity2" name="quantity2" value="0" min="0" max="20">
-                <button class="add-to-cart" data-name="Cricket Batting Gloves" data-price="120">Add to Cart</button>
-            </div>
-            <!-- Add more product cards here -->
-        </section>
-        <aside class="cart">
-            <h2>Shopping Cart</h2>
-            <div class="cart-items"></div>
-            <div class="cart-summary">
-                <p>Total: <span id="cart-total">RM 0</span></p>
-                <button id="checkout">Proceed to Payment</button>
-            </div>
-        </aside>
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Row -->
+                <tr>
+                    <td>Badminton Racket</td>
+                    <td><span>10</span></td>
+                    <td>
+                        <button onclick="updateQuantity(this, 1)">+1</button>
+                        <button onclick="updateQuantity(this, -1)">-1</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cricket Batting Gloves</td>
+                    <td><span>5</span></td>
+                    <td>
+                        <button onclick="updateQuantity(this, 1)">+1</button>
+                        <button onclick="updateQuantity(this, -1)">-1</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="actions">
+            <button onclick="addItem()">Add New Item</button>
+        </div>
     </main>
-    <footer class="footer">
-        <p>&copy; 2025 Sports Inventory Store</p>
-    </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const cart = [];
-            const cartItems = document.querySelector(".cart-items");
-            const cartTotal = document.getElementById("cart-total");
+        function updateQuantity(button, change) {
+            const row = button.closest('tr');
+            const quantitySpan = row.querySelector('td span');
+            let currentQuantity = parseInt(quantitySpan.textContent, 10);
 
-            const updateCart = () => {
-                cartItems.innerHTML = "";
-                let total = 0;
+            currentQuantity += change;
+            if (currentQuantity < 0) currentQuantity = 0;
 
-                cart.forEach((item, index) => {
-                    const cartItem = document.createElement("div");
-                    cartItem.innerHTML = `
-                        <p>${item.name} - RM ${item.price} x ${item.quantity}</p>
-                        <button onclick="removeItem(${index})">Remove</button>
-                    `;
-                    cartItems.appendChild(cartItem);
-                    total += item.price * item.quantity;
-                });
+            quantitySpan.textContent = currentQuantity;
+        }
 
-                cartTotal.innerText = `RM ${total}`;
-            };
+        function addItem() {
+            const itemName = prompt("Enter the name of the new item:");
+            const itemQuantity = parseInt(prompt("Enter the quantity for the new item (0-20):"), 10);
 
-            const addToCart = (name, price, quantity) => {
-                const existingItem = cart.find((item) => item.name === name);
+            if (itemName && !isNaN(itemQuantity) && itemQuantity >= 0 && itemQuantity <= 20) {
+                const tableBody = document.querySelector("#inventoryTable tbody");
+                const newRow = document.createElement("tr");
 
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                } else {
-                    cart.push({ name, price, quantity });
-                }
-                updateCart();
-            };
+                newRow.innerHTML = `
+                    <td>${itemName}</td>
+                    <td><span>${itemQuantity}</span></td>
+                    <td>
+                        <button onclick="updateQuantity(this, 1)">+1</button>
+                        <button onclick="updateQuantity(this, -1)">-1</button>
+                    </td>
+                `;
 
-            document.querySelectorAll(".add-to-cart").forEach((button) => {
-                button.addEventListener("click", () => {
-                    const name = button.getAttribute("data-name");
-                    const price = parseFloat(button.getAttribute("data-price"));
-                    const quantityInput = button.previousElementSibling.previousElementSibling;
-                    const quantity = parseInt(quantityInput.value, 10);
-
-                    if (quantity > 0 && quantity <= 20) {
-                        addToCart(name, price, quantity);
-                        quantityInput.value = 0;
-                    } else {
-                        alert("Please enter a valid quantity (0-20).");
-                    }
-                });
-            });
-
-            window.removeItem = (index) => {
-                cart.splice(index, 1);
-                updateCart();
-            };
-
-            document.getElementById("checkout").addEventListener("click", () => {
-                alert("Proceeding to Payment...");
-            });
-        });
+                tableBody.appendChild(newRow);
+            } else {
+                alert("Invalid input. Please enter a valid name and quantity (0-20).");
+            }
+        }
     </script>
 </body>
 </html>
