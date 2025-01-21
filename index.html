@@ -28,6 +28,12 @@
         .hidden {
             display: none;
         }
+        .nav-link {
+            color: #007bff;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -39,6 +45,12 @@
     </div>
 
     <div class="container">
+        <!-- Navigation Links -->
+        <nav class="nav justify-content-center">
+            <a class="nav-link" href="#loginSection">Login</a>
+            <a class="nav-link hidden" href="#inventorySection">Inventory</a>
+        </nav>
+
         <!-- Login Form -->
         <div id="loginSection" class="card">
             <div class="card-header">
@@ -126,12 +138,4 @@
                             <td>Ath Discus Nelco 1kg</td>
                             <td>Nelco</td>
                             <td><input type="number" class="form-control" value="10" min="0" max="20"></td>
-                            <td><button class="btn btn-primary update-btn">Update</button></td>
-                        </tr>
-                        <tr>
-                            <td>Ath Discus Rings (Wooden)</td>
-                            <td>Generic</td>
-                            <td><input type="number" class="form-control" value="5" min="0" max="20"></td>
-                            <td><button class="btn btn-primary update-btn">Update</button></td>
-                        </tr>
-                        <tr>
+                            <td><button class
