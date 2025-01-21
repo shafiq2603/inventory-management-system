@@ -79,60 +79,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample items -->
-                        <script>
-                            const items = [];
-                            for (let i = 1; i <= 1000; i++) {
-                                items.push({
-                                    name: `Sport Equipment ${i}`,
-                                    brand: `Brand ${Math.ceil(Math.random() * 10)}`,
-                                    quantity: Math.floor(Math.random() * 20) + 1
-                                });
-                            }
-
-                            items.forEach(item => {
-                                document.write(`
-                                    <tr>
-                                        <td>${item.name}</td>
-                                        <td>${item.brand}</td>
-                                        <td><input type="number" class="form-control" value="${item.quantity}" min="0" max="20"></td>
-                                        <td><button class="btn btn-primary update-btn">Update</button></td>
-                                    </tr>
-                                `);
-                            });
-                        </script>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8Fq78ZtFxaMQZgVV0y3u9T1Oe3rlvNxzI6k5lw5xrl4dka" crossorigin="anonymous"></script>
-    <script>
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Simulate login success
-            alert('Login successful!');
-            // Show the inventory section and hide the login section
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('inventorySection').classList.remove('hidden');
-        });
-
-        // Handle update button clicks
-        document.querySelectorAll('.update-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const row = this.closest('tr');
-                const itemName = row.cells[0].innerText;
-                const quantityInput = row.querySelector('input[type="number"]');
-                const newQuantity = quantityInput.value;
-
-                // Simulate updating the inventory
-                alert(`Updated ${itemName} quantity to ${newQuantity}`);
-                // Here you would typically send the updated quantity to the server
-            });
-        });
-    </script>
-</body>
-</html>
+                        <!-- List of sports equipment items -->
+                        <tr>
+                            <td>Badminton Racket VECTOR</td>
+                            <td>Yonex</td>
+                            <td><input type="number" class="form-control" value="10" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cricket Batting Gloves (Pair)</td>
+                            <td>Adidas</td>
+                            <td><input type="number" class="form-control" value="12" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tennis Net SPORTIVA</td>
+                            <td>Sportiva</td>
+                            <td><input type="number" class="form-control" value="5" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tennis Racket (Wilson)</td>
+                            <td>Wilson</td>
+                            <td><input type="number" class="form-control" value="8" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Agility Cone 6"</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="15" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Amplifier for Octopad</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="3" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ath Chest Number-Cloth</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="20" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ath Discus Nelco 1kg</td>
+                            <td>Nelco</td>
+                            <td><input type="number" class="form-control" value="10" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ath Discus Rings (Wooden)</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="5" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
