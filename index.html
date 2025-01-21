@@ -92,90 +92,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Inventory items will be dynamically populated here -->
-                    </tbody>
-                </table>
-                <button class="btn btn-success mt-3" id="checkoutButton">Proceed to Checkout</button>
-            </div>
-        </div>
-
-        <!-- Checkout Section -->
-        <div id="checkoutSection" class="card hidden">
-            <div class="card-header">
-                <h3>Checkout</h3>
-            </div>
-            <div class="card-body">
-                <p>Checkout successful! Thank you for using our inventory management system.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Sample inventory data
-        const inventory = [
-            { itemName: 'Badminton Racket VECTOR', brand: 'Yonex', quantity: 5 },
-            { itemName: 'Cricket Batting Gloves (Pair)', brand: 'Adidas', quantity: 12 },
-            { itemName: 'Tennis Racket Wilson', brand: 'Wilson', quantity: 8 },
-            { itemName: 'Soccer Ball PU Size 5', brand: 'Star Impact', quantity: 10 },
-            { itemName: 'Basketball Leather No.6', brand: 'Spalding', quantity: 7 },
-        ];
-
-        // Populate inventory table
-        const inventoryTableBody = document.querySelector('#inventoryTable tbody');
-        inventory.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.itemName}</td>
-                <td>${item.brand}</td>
-                <td><input type="number" class="form-control" value="${item.quantity}" min="0" max="20"></td>
-                <td><button class="btn btn-primary update-btn">Update</button></td>
-            `;
-            inventoryTableBody.appendChild(row);
-        });
-
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Simulate login success
-            alert('Login successful!');
-            // Hide login form and show inventory management section
-            document.getElementById('loginSection').classList.add('hidden');
-            document.querySelector('.nav-link[href="#inventorySection"]').classList.remove('hidden');
-            document.getElementById('inventorySection').classList.remove('hidden');
-        });
-
-        // Handle update button clicks
-        document.querySelectorAll('.update-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const row = this.closest('tr');
-                const itemName = row.cells[0].innerText;
-                const quantityInput = row.querySelector('input[type="number"]');
-                const newQuantity = quantityInput.value;
-
-                // Simulate updating the inventory
-                alert(`Updated ${itemName} quantity to ${newQuantity}`);
-                // Here you would typically send the updated quantity to the server
-            });
-        });
-
-        // Handle search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase();
-            document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
-                const itemName = row.cells[0].innerText.toLowerCase();
-                row.style.display = itemName.includes(searchValue) ? '' : 'none';
-            });
-        });
-
-        // Handle checkout button click
-        document.getElementById('checkoutButton').addEventListener('click', function() {
-            // Hide inventory management section and show checkout section
-            document.getElementById('inventorySection').classList.add('hidden');
-            document.querySelector('.nav-link[href="#checkoutSection"]').classList.remove('hidden');
-            document.getElementById('checkoutSection').classList.remove('hidden');
-        });
-    </script>
-</body>
-</html>
+                        <!-- Sample inventory items -->
+                        <tr>
+                            <td>Badminton Racket VECTOR</td>
+                            <td>Yonex</td>
+                            <td><input type="number" class="form-control" value="10" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cricket Batting Gloves (Pair)</td>
+                            <td>Adidas</td>
+                            <td><input type="number" class="form-control" value="12" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tennis Net SPORTIVA</td>
+                            <td>Sportiva</td>
+                            <td><input type="number" class="form-control" value="5" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tennis Racket (Wilson)</td>
+                            <td>Wilson</td>
+                            <td><input type="number" class="form-control" value="8" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Agility Cone 6"</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="15" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Amplifier for Octopad</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="3" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ath Chest Number-Cloth</td>
+                            <td>Generic</td>
+                            <td><input type="number" class="form-control" value="20" min="0" max="20"></td>
+                            <td><button class="btn btn-primary update-btn">Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ath Discus Nelco 1kg</td>
+                            <td>Nel
