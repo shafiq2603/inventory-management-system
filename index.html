@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pusat Sukan UTeM - Inventory Management System</title>
+    <title>Pusat Sukan UTeM - Staff Inventory Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJX+CQ5k2XN6Y5RG5TXUBmS0JSK5WxQOgl+eE3fFjV6g6EGK/0zvsYjH9j1F" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -29,33 +28,6 @@
         .hidden {
             display: none;
         }
-        .nav-link {
-            color: #007bff;
-        }
-        .nav-link:hover {
-            text-decoration: underline;
-        }
-        .btn-primary, .btn-success {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-primary:hover, .btn-success:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        .navbar {
-            background-color: #f8f9fa;
-            padding: 10px 0;
-        }
-        .navbar-brand {
-            color: #007bff;
-        }
-        .navbar-brand:hover {
-            color: #0056b3;
-        }
-        .fa-search, .fa-user, .fa-boxes, .fa-cart-arrow-down {
-            margin-right: 8px;
-        }
     </style>
 </head>
 <body>
@@ -63,31 +35,8 @@
     <!-- Header Section -->
     <div class="header">
         <h1>Pusat Sukan Universiti Teknikal Malaysia Melaka</h1>
-        <h2>Inventory Management System</h2>
+        <h2>Staff Inventory Management</h2>
     </div>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">PS UTeM</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#loginSection"><i class="fas fa-user"></i> Login</a>
-                    </li>
-                    <li class="nav-item hidden" id="inventoryNavItem">
-                        <a class="nav-link" href="#inventorySection"><i class="fas fa-boxes"></i> Inventory</a>
-                    </li>
-                    <li class="nav-item hidden" id="checkoutNavItem">
-                        <a class="nav-link" href="#checkoutSection"><i class="fas fa-cart-arrow-down"></i> Checkout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <div class="container">
         <!-- Login Form -->
@@ -116,9 +65,9 @@
                 <h3>Manage Sport Equipment Inventory</h3>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <input type="text" class="form-control w-75" placeholder="Search products..." aria-label="Search" id="searchInput">
-                    <button class="btn btn-primary ms-2"><i class="fas fa-search"></i> Search</button>
+                <div class="search-container d-flex justify-content-end mb-3">
+                    <input type="text" class="form-control" placeholder="Search products..." aria-label="Search">
+                    <button class="btn btn-primary ms-2">Search</button>
                 </div>
                 <table class="table table-bordered table-striped" id="inventoryTable">
                     <thead>
@@ -130,11 +79,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample inventory items -->
                         <tr>
                             <td>Badminton Racket VECTOR</td>
                             <td>Yonex</td>
-                            <td><input type="number" class="form-control" value="10" min="0" max="20"></td>
+                            <td><input type="number" class="form-control" value="5" min="0" max="20"></td>
                             <td><button class="btn btn-primary update-btn">Update</button></td>
                         </tr>
                         <tr>
@@ -161,7 +109,38 @@
                             <td><input type="number" class="form-control" value="7" min="0" max="20"></td>
                             <td><button class="btn btn-primary update-btn">Update</button></td>
                         </tr>
-                        <!-- Add more items as needed -->
                     </tbody>
                 </table>
-                <button class="btn btn-success mt-3" id="checkoutButton"><i class="fas fa-cart-arrow-down"></i> Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8Fq78ZtFxaMQZgVV0y3u9T1Oe3rlvNxzI6k5lw5xrl4dka" crossorigin="anonymous"></script>
+    <script>
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Simulate login success
+            alert('Login successful!');
+            // Show the inventory section and hide the login section
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('inventorySection').classList.remove('hidden');
+        });
+
+        // Handle update button clicks
+        document.querySelectorAll('.update-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const itemName = row.cells[0].innerText;
+                const quantityInput = row.querySelector('input[type="number"]');
+                const newQuantity = quantityInput.value;
+
+                // Simulate updating the inventory
+                alert(`Updated ${itemName} quantity to ${newQuantity}`);
+                // Here you would typically send the updated quantity to the server
+            });
+        });
+    </script>
+</body>
+</html>
